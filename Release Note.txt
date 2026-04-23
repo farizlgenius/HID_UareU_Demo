@@ -1,0 +1,4 @@
+HID UareU Camera Rev03
+25/08/2025
+- Change Status result format showing on UI from 0.xx -> xx %
+- Change Logical for Image Capture in HFApi.cs file

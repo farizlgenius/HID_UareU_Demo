@@ -1,0 +1,99 @@
+﻿<Page x:Class="UareU.Views.MatchingPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:local="clr-namespace:UareU.Views"
+      xmlns:controls="clr-namespace:UareU.Views"
+      Background="#F5F6FA">
+    
+    <Grid Margin="20">
+        <!-- Define rows -->
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <!-- Header -->
+            <RowDefinition Height="*"/>
+            <!-- Images -->
+            <RowDefinition Height="Auto"/>
+            <!-- Score -->
+        </Grid.RowDefinitions>
+
+        <!-- Header -->
+        <TextBlock Text="Face Matching"
+                   FontSize="28"
+                   FontWeight="Bold"
+                   Foreground="#333"
+                   HorizontalAlignment="Center"
+                   Grid.Row="0"
+                   Margin="0,20"/>
+
+        <!-- Image upload area -->
+        <Grid Grid.Row="1" HorizontalAlignment="Center">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="50"/>
+                <!-- spacing -->
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <!-- First Image -->
+            <StackPanel Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center">
+                <Button x:Name="UploadBtn1"
+                        Content="Upload Image 1"
+                         Style="{DynamicResource  FancyButton}"
+                        Click="UploadImg1"
+                        Margin="0,0,0,10"/>
+
+                <Border Background="White" BorderBrush="#DDD" BorderThickness="1" CornerRadius="12"
+                        Width="Auto" Height="Auto" MinWidth="200" MinHeight="200" MaxHeight="500" MaxWidth="500">
+                    <Image x:Name="Image1Preview" Stretch="Uniform"/>
+                </Border>
+            </StackPanel>
+
+            <!-- Second Image -->
+            <StackPanel Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center">
+                <Button x:Name="UploadBtn2"
+                        Content="Upload Image 2"
+                         Style="{DynamicResource  FancyButton}"
+                        Click="UploadImg2"
+                        Margin="0,0,0,10"/>
+
+                <Border Background="White" BorderBrush="#DDD" BorderThickness="1" CornerRadius="12"
+                        Width="Auto" Height="Auto" MinWidth="200" MinHeight="200" MaxHeight="500" MaxWidth="500">
+                    <Image x:Name="Image2Preview" Stretch="Uniform"/>
+                </Border>
+            </StackPanel>
+        </Grid>
+
+    
+
+        <!-- Matching Score -->
+        <StackPanel Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,20">
+            <Button x:Name="MatchBtn"
+        Content="Match"
+         Style="{DynamicResource  FancyButton}"
+        Click="Matching"
+        Margin="0,0,0,10"/>
+            <TextBlock Text="Matching Score"
+                       FontSize="20"
+                       FontWeight="Bold"
+                       Foreground="#333"
+                       HorizontalAlignment="Center"
+                       Margin="0,0,0,5"/>
+            <Border Width="150" Height="50" Background="White" BorderBrush="#DDD" BorderThickness="1" CornerRadius="12">
+                <TextBlock x:Name="ScoreText"
+                           Text="0%"
+                           FontSize="24"
+                           FontWeight="Bold"
+                           Foreground="#5C6BC0"
+                           HorizontalAlignment="Center"
+                           VerticalAlignment="Center"/>
+            </Border>
+        </StackPanel>
+        <controls:LoaderView
+                    x:Name="Loader"
+                     Grid.RowSpan="3"
+                     Panel.ZIndex="9999"
+                     HorizontalAlignment="Stretch"
+                     VerticalAlignment="Stretch"/>
+
+    </Grid>
+</Page>

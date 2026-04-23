@@ -1,0 +1,100 @@
+﻿<Application x:Class="UareU.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:UareU"
+             StartupUri="Views/MainWindow.xaml"
+             >
+    <Application.Resources>
+        
+
+        <!-- Card fade + scale in -->
+        <Storyboard x:Key="Loader.Show">
+            <DoubleAnimation Storyboard.TargetProperty="(UIElement.Opacity)"
+                     From="0" To="1"
+                     Duration="0:0:0.25"/>
+
+            <DoubleAnimation Storyboard.TargetProperty="(ScaleTransform.ScaleX)"
+                     From="0.85" To="1"
+                     Duration="0:0:0.25"/>
+
+            <DoubleAnimation Storyboard.TargetProperty="(ScaleTransform.ScaleY)"
+                     From="0.85" To="1"
+                     Duration="0:0:0.25"/>
+        </Storyboard>
+
+        <!-- Card fade out -->
+        <Storyboard x:Key="Loader.Hide">
+            <DoubleAnimation Storyboard.TargetProperty="(UIElement.Opacity)"
+                             To="0"
+                             Duration="0:0:0.2"/>
+        </Storyboard>
+
+
+        <!-- Fancy Modern Button Style -->
+        <Style x:Key="FancyButton" TargetType="Button">
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Background" Value="#5C6BC0"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Height" Value="55"/>
+            <Setter Property="Width" Value="220"/>
+            
+
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Grid>
+                            <!-- Shadow -->
+                            <Border x:Name="shadow"
+                     CornerRadius="15"
+                     Background="#2E356B"
+                     Margin="0,6,0,0"
+                     Opacity="0.6"/>
+
+                            <!-- Main Button -->
+                            <Border x:Name="border"
+                     CornerRadius="15"
+                     Background="{TemplateBinding Background}">
+                                <ContentPresenter HorizontalAlignment="Center"
+                                   VerticalAlignment="Center"/>
+                            </Border>
+                        </Grid>
+
+                        <ControlTemplate.Triggers>
+
+                            <!-- Hover -->
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="border" Property="Background" Value="#7986CB"/>
+                                <Setter TargetName="shadow" Property="Opacity" Value="0.9"/>
+                                <Setter TargetName="border" Property="RenderTransform">
+                                    <Setter.Value>
+                                        <ScaleTransform ScaleX="1.05" ScaleY="1.05"/>
+                                    </Setter.Value>
+                                </Setter>
+                            </Trigger>
+
+                            <!-- Click -->
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="border" Property="Background" Value="#3F51B5"/>
+                                <Setter TargetName="shadow" Property="Margin" Value="0,2,0,0"/>
+                                <Setter TargetName="border" Property="RenderTransform">
+                                    <Setter.Value>
+                                        <ScaleTransform ScaleX="0.98" ScaleY="0.98"/>
+                                    </Setter.Value>
+                                </Setter>
+                            </Trigger>
+
+                            <!-- Disabled -->
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter TargetName="border" Property="Opacity" Value="0.5"/>
+                            </Trigger>
+
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Application.Resources>
+</Application>

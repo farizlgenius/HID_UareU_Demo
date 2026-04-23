@@ -1,0 +1,157 @@
+﻿<Page x:Class="UareU.Views.AutoCapturePage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:UareU.Views"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="AutoCapturePage">
+   
+
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <!-- ========== RIGHT CONTENT AREA ========== -->
+        
+        <Grid Grid.Column="0" Margin="40">
+   
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="40"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+
+
+            <!-- Header -->
+            <TextBlock Text="Process Detail"
+     Grid.Row="0"
+                FontSize="32"
+FontWeight="Bold"
+Foreground="#333"/>
+
+            <!-- Subtitle -->
+            <TextBlock Grid.Row="1"
+Text="Process detail"
+FontSize="16"
+Foreground="#666"/>
+
+            <!-- Placeholder content panel -->
+            <Border Grid.Row="2"
+ Background="White"
+ CornerRadius="20"
+ Margin="0,20,0,0"
+ Padding="25"
+ BorderBrush="#E0E0E0"
+ BorderThickness="1">
+
+                <StackPanel VerticalAlignment="Center">
+
+                    <!-- Description -->
+                    <TextBlock Text="Detail"
+            x:Name="detail"
+            FontSize="20"
+             FontWeight="Bold"
+            Foreground="#666"
+            TextAlignment="Center"
+            Margin="0,15"/>
+
+
+                    <Button Content="Save Image"
+DockPanel.Dock="Right"
+Style="{DynamicResource  FancyButton}"
+Width="140"
+Height="45"
+Margin="10,0,0,0"
+Click="Select_Path"/>
+
+                </StackPanel>
+
+            </Border>
+            <Border Grid.Row="4"
+Background="White"
+CornerRadius="12"
+Padding="10"
+Margin="0,10"
+BorderBrush="#E0E0E0"
+BorderThickness="1">
+
+                <Image x:Name="captureImage"
+         Stretch="Fill"/>
+
+            </Border>
+            <!-- Path box -->
+        </Grid>
+        <Border Grid.Column="1"
+ Background="White"
+ CornerRadius="20"
+ Padding="20"
+ BorderBrush="#E6E6E6"
+ BorderThickness="1">
+
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+
+                <!-- Header -->
+                <DockPanel Margin="0,0,0,15">
+                    <TextBlock Text="📷 Live Camera"
+                FontSize="20"
+                FontWeight="SemiBold"
+                Foreground="#333"/>
+                </DockPanel>
+
+                <!-- Camera Container -->
+                <Border Grid.Row="1"
+         CornerRadius="15"
+         Background="#111"
+         ClipToBounds="True">
+
+                    <Grid>
+
+                        <!-- Camera Image -->
+                        <Image x:Name="liveStreamImage"
+                                Stretch="Uniform"
+                               />
+                        <!--  Stretch="Fill" -->
+                <!--RenderTransformOrigin="0.5,0.5" -->
+                               
+
+                        <!-- Overlay canvas for face boxes -->
+                        <Canvas x:Name="canvasOverlay"
+                 IsHitTestVisible="False"
+                                Width="{Binding ElementName=liveStreamImage, Path=ActualWidth}"
+        Height="{Binding ElementName=liveStreamImage, Path=ActualHeight}"
+                                />
+
+                        <!-- Glass overlay label -->
+                        <Border HorizontalAlignment="Left"
+                 VerticalAlignment="Top"
+                 Margin="15"
+                 Padding="8,4"
+                 CornerRadius="8"
+                 Background="#66000000">
+
+                            <TextBlock Text="LIVE"
+                        Foreground="White"
+                        FontWeight="Bold"
+                        FontSize="12"/>
+                        </Border>
+
+                    </Grid>
+                </Border>
+
+            </Grid>
+        </Border>
+
+    </Grid>
+</Page>
