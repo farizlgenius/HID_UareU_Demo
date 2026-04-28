@@ -1,0 +1,336 @@
+﻿<Page x:Class="WpfApp.Views.VerificationPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:WpfApp.Views"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="VerificationPage"
+       Loaded="Page_Loaded"
+Unloaded="Page_Unloaded"
+      >
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <!-- ========== RIGHT CONTENT AREA ========== -->
+
+        <Grid Grid.Column="0" Margin="40">
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="10"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+
+
+            <!-- Header -->
+            <TextBlock Text="Verification"
+                      Grid.Column="0"
+    Grid.ColumnSpan="3"
+     Grid.Row="0"
+                FontSize="32"
+FontWeight="Bold"
+Foreground="#333"/>
+
+            <!-- Subtitle -->
+            <TextBlock Grid.Row="1"
+                       Grid.Column="0"
+                Grid.ColumnSpan="3"
+                Text="Detail"
+                FontSize="16"
+                Foreground="#666"/>
+
+            <!-- Placeholder content panel -->
+            <Border Grid.Row="2"
+  Grid.Column="0"
+Grid.ColumnSpan="3"
+ Background="White"
+ CornerRadius="20"
+ Margin="0,20,0,0"
+ Padding="25"
+ BorderBrush="#E0E0E0"
+ BorderThickness="1">
+
+                <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Orientation="Horizontal" >
+
+                    <Button Content="Image"
+Style="{DynamicResource  FancyButton}"
+Width="150"
+Height="45"
+Margin="0,0,0,0"
+Click="Image_Path"/>
+
+                    <Button Content="Verify"
+                            x:Name="VerifyBtn"
+                            IsEnabled="False"
+Style="{DynamicResource  FancyButton}"
+Width="150"
+Height="45"
+Margin="20,0,0,0"
+Click="Click_Verify"/>
+
+                </StackPanel>
+
+            </Border>
+
+
+            <Border Grid.Row="4"
+        Grid.ColumnSpan="3"
+        Background="White"
+        CornerRadius="22"
+        Margin="0,20,0,0"
+        Padding="25"
+        BorderBrush="#E0E0E0"
+        BorderThickness="1">
+
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="25"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <!-- ================= LEFT IMAGE ================= -->
+                    <StackPanel>
+                        <TextBlock Text="📄 ID / Reference Image"
+                       FontSize="16"
+                       FontWeight="SemiBold"
+                       Foreground="#444"
+                       Margin="5"/>
+
+                        <Border CornerRadius="18"
+                    Background="#F3F4F6"
+                    Padding="10"
+                    BorderBrush="#E5E7EB"
+                    BorderThickness="1">
+
+                            <Grid>
+                                <!-- Image -->
+                                <Image x:Name="ImagePreview"
+                           Stretch="UniformToFill"
+                           Height="320"
+                           ClipToBounds="True"/>
+
+                                <!-- Glass label -->
+                                <Border HorizontalAlignment="Left"
+                            VerticalAlignment="Top"
+                            Margin="10"
+                            Padding="6,2"
+                            CornerRadius="6"
+                            Background="#66000000">
+
+                                    <TextBlock Text="REFERENCE"
+                                   Foreground="White"
+                                   FontSize="11"
+                                   FontWeight="Bold"/>
+                                </Border>
+                            </Grid>
+                        </Border>
+                    </StackPanel>
+
+                    <!-- ================= RIGHT IMAGE ================= -->
+                    <StackPanel Grid.Column="2">
+                        <TextBlock Text="📷 Live Capture"
+                       FontSize="16"
+                       FontWeight="SemiBold"
+                       Foreground="#444"
+                       Margin="5"/>
+
+                        <Border CornerRadius="18"
+                    Background="#F3F4F6"
+                    Padding="10"
+                    BorderBrush="#E5E7EB"
+                    BorderThickness="1">
+
+                            <Grid>
+                                <!-- Image -->
+                                <Image x:Name="CapturePreview"
+                           Stretch="UniformToFill"
+                           Height="320"
+                           ClipToBounds="True"/>
+
+                                <!-- Glass label -->
+                                <Border HorizontalAlignment="Left"
+                            VerticalAlignment="Top"
+                            Margin="10"
+                            Padding="6,2"
+                            CornerRadius="6"
+                            Background="#66000000">
+
+                                    <TextBlock Text="CAPTURE"
+                                   Foreground="White"
+                                   FontSize="11"
+                                   FontWeight="Bold"/>
+                                </Border>
+                            </Grid>
+                        </Border>
+                    </StackPanel>
+
+                </Grid>
+            </Border>
+            <Border Grid.Row="5"
+        Grid.ColumnSpan="3"
+        Background="White"
+        CornerRadius="22"
+        Margin="0,20,0,0"
+        Padding="30"
+        BorderBrush="#E0E0E0"
+        BorderThickness="1">
+
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="25"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <!-- MATCH ICON -->
+                    <Border x:Name="ResultIconBg"
+                Width="90"
+                Height="90"
+                CornerRadius="45"
+                Background="#FFE8F8EE"
+                VerticalAlignment="Center">
+
+                        <TextBlock x:Name="ResultIcon"
+                       Text="✔"
+                       FontSize="44"
+                       VerticalAlignment="Center"
+                       HorizontalAlignment="Center"
+                       Foreground="#16A34A"/>
+                    </Border>
+
+                    <!-- RESULT TEXT -->
+                    <StackPanel Grid.Column="2" VerticalAlignment="Center">
+
+                        <TextBlock Text="Verification Result"
+                       FontSize="14"
+                       Foreground="#888"/>
+
+                        <TextBlock x:Name="MatchSuccess"
+                       Text="Waiting..."
+                       FontSize="28"
+                       FontWeight="Bold"
+                       Foreground="#333"
+                       Margin="0,4,0,10"/>
+
+                        <!-- SCORE CARD -->
+                        <Border Background="#F4F6F8"
+                    CornerRadius="14"
+                    Padding="15">
+
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="Similarity Score : "
+                               FontSize="16"
+                               Foreground="#555"/>
+
+                                <TextBlock x:Name="MatchScore"
+                               Text="0%"
+                               FontSize="20"
+                               FontWeight="Bold"
+                               Foreground="#2563EB"/>
+                            </StackPanel>
+                        </Border>
+
+                    </StackPanel>
+                </Grid>
+            </Border>
+
+
+
+            <!-- Path box -->
+        </Grid>
+        <Border Grid.Column="1"
+ Background="White"
+ CornerRadius="20"
+ Padding="20"
+ BorderBrush="#E6E6E6"
+ BorderThickness="1">
+
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+
+                <!-- Header -->
+                <DockPanel Margin="0,0,0,15">
+                    <TextBlock Text="📷 Live Camera"
+                FontSize="20"
+                FontWeight="SemiBold"
+                Foreground="#333"/>
+                </DockPanel>
+
+                <!-- Camera Container -->
+                <Border Grid.Row="1"
+         CornerRadius="15"
+         Background="#111"
+         ClipToBounds="True">
+
+                    <Grid>
+
+                        <!-- Camera Image -->
+                        <Image x:Name="liveStreamImage"
+                                Stretch="Uniform"
+                               />
+                        <!--  Stretch="Fill" -->
+                        <!--RenderTransformOrigin="0.5,0.5" -->
+
+
+                        <!-- Overlay canvas for face boxes -->
+                        <Canvas x:Name="canvasOverlay"
+                 IsHitTestVisible="False"
+                                Width="{Binding ElementName=liveStreamImage, Path=ActualWidth}"
+        Height="{Binding ElementName=liveStreamImage, Path=ActualHeight}"
+                                />
+
+                        <!-- Glass overlay label -->
+                        <Border HorizontalAlignment="Left"
+                 VerticalAlignment="Top"
+                 Margin="15"
+                 Padding="8,4"
+                 CornerRadius="8"
+                 Background="#66000000">
+
+                            <TextBlock Text="LIVE"
+                        Foreground="White"
+                        FontWeight="Bold"
+                        FontSize="12"/>
+                        </Border>
+
+                        <!-- FPS OVERLAY -->
+                        <Border HorizontalAlignment="Right"
+VerticalAlignment="Top"
+Margin="15"
+Padding="8,4"
+CornerRadius="8"
+Background="#66000000">
+
+                            <TextBlock x:Name="FpsText"
+       Text="0 FPS"
+       Foreground="#00FF90"
+       FontWeight="Bold"
+       FontSize="14"/>
+                        </Border>
+
+                    </Grid>
+                </Border>
+
+            </Grid>
+        </Border>
+
+    </Grid>
+</Page>

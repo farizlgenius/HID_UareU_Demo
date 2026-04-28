@@ -1,7 +1,9 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
+using System.Security.Cryptography;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -23,14 +25,9 @@ namespace UareU.Helpers
             if (error != (Int32)HFErrorCodes.HFERROR_OK)
             {
                 Console.WriteLine(error);
-                if (error != 3)
-                {
-                    MessageBox.Show("HFApi error, quitting.  Put break point in VERIFY() and check the stack: " + ErrorToString(error));
-                    HFTerminate();
-                    Environment.Exit(error);
-                }
+                MessageBox.Show("HFApi error, quitting.  Put break point in VERIFY() and check the stack: " + ErrorToString(error));
                 HFTerminate();
-                return error;
+                Environment.Exit(error);
             }
             return 0;
 
@@ -164,7 +161,7 @@ namespace UareU.Helpers
 
         }
 
-        public static void DrawFaceFeatures(UInt64 hfResult,System.Windows.Controls.Canvas _canvasDataOverlay,System.Windows.Controls.Image imageControl,string position,string quality)
+        public static void DrawFaceFeatures(UInt64 hfResult,System.Windows.Controls.Canvas _canvasDataOverlay,System.Windows.Controls.Image imageControl,string position,string quality,string spoof)
         {
             // Points of interest
             HFPoint faceBottomRight = new HFPoint();
@@ -182,7 +179,7 @@ namespace UareU.Helpers
             {
                 if (hfError == (UInt32)HFERROR_OK)
                 {
-                    DrawDataPointsOnGui(faceTopLeft, faceBottomRight, _canvasDataOverlay, imageControl, position,quality);
+                    DrawDataPointsOnGui(faceTopLeft, faceBottomRight, _canvasDataOverlay, imageControl, position,quality,spoof);
 
                 }
                 else
@@ -210,12 +207,13 @@ namespace UareU.Helpers
             return bitmap;
         }
 
+      
         public static void DrawDataPointsOnGui(
     HFPoint faceTopLeft,
     HFPoint faceBottomRight,
     Canvas canvas,
     System.Windows.Controls.Image imageControl,
-            string position,string quality
+            string position,string quality,string spoof
             )
         {
             canvas.Children.Clear();
@@ -246,30 +244,60 @@ namespace UareU.Helpers
             TextBlock text = new TextBlock();
             text.Text = position;
             text.Foreground = System.Windows.Media.Brushes.LimeGreen;
-            text.FontSize = 18;
+            text.FontSize = 10;
             text.FontWeight = FontWeights.Bold;
             //text.Background = new SolidColorBrush(System.Windows.Media.Color.FromArgb(160, 0, 0, 0));
             text.Padding = new Thickness(6, 2, 6, 2);
 
             // place slightly above top line
             Canvas.SetLeft(text, x1);
-            Canvas.SetTop(text, y1 - 30);
+            Canvas.SetTop(text, y1 - 20);
 
             // TEXT for Quality
             TextBlock text2 = new TextBlock();
-            text2.Text = $"Q: {quality}";
+            text2.Text = $"Quality {quality}";
             text2.Foreground = System.Windows.Media.Brushes.LimeGreen;
-            text2.FontSize = 18;
+            text2.FontSize = 10;
             text2.FontWeight = FontWeights.Bold;
             //text.Background = new SolidColorBrush(System.Windows.Media.Color.FromArgb(160, 0, 0, 0));
             text2.Padding = new Thickness(6, 2, 6, 2);
             // place slightly above top line
             Canvas.SetLeft(text2, x1);
-            Canvas.SetTop(text2, y1 - 50);
+            Canvas.SetTop(text2, y1 - 30);
+
+            // TEXT for Quality
+            TextBlock text3 = new TextBlock();
+            text3.Text = $"Spoof {spoof}";
+            text3.Foreground = System.Windows.Media.Brushes.LimeGreen;
+            text3.FontSize = 10;
+            text3.FontWeight = FontWeights.Bold;
+            //text.Background = new SolidColorBrush(System.Windows.Media.Color.FromArgb(160, 0, 0, 0));
+            text3.Padding = new Thickness(6, 2, 6, 2);
+            // place slightly above top line
+            Canvas.SetLeft(text3, x1);
+            Canvas.SetTop(text3, y1 - 40);
 
 
             canvas.Children.Add(text);
             canvas.Children.Add(text2);
+            canvas.Children.Add(text3);
+        }
+
+
+        public static void SaveBitmapImageToFile(BitmapImage bitmap, string fileName)
+        {
+            string folder = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Databases");
+            Directory.CreateDirectory(folder);
+
+            string fullPath = System.IO.Path.Combine(folder, fileName);
+
+            BitmapEncoder encoder = new PngBitmapEncoder();
+            encoder.Frames.Add(BitmapFrame.Create(bitmap));
+
+            using (FileStream fs = new FileStream(fullPath, FileMode.Create))
+            {
+                encoder.Save(fs);
+            }
         }
 
 

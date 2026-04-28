@@ -3,7 +3,10 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:local="clr-namespace:UareU.Views"
       xmlns:controls="clr-namespace:UareU.Views"
-      Background="#F5F6FA">
+      Background="#F5F6FA"
+       Loaded="Page_Loaded"
+Unloaded="Page_Unloaded"
+      >
     
     <Grid Margin="20">
         <!-- Define rows -->
@@ -78,7 +81,7 @@
                        Foreground="#333"
                        HorizontalAlignment="Center"
                        Margin="0,0,0,5"/>
-            <Border Width="150" Height="50" Background="White" BorderBrush="#DDD" BorderThickness="1" CornerRadius="12">
+            <Border Width="auto" Height="50" Background="White" BorderBrush="#DDD" BorderThickness="1" CornerRadius="12">
                 <TextBlock x:Name="ScoreText"
                            Text="0%"
                            FontSize="24"

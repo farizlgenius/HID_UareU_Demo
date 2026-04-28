@@ -13,8 +13,10 @@ using System.Windows.Forms;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Media.Media3D;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using WpfApp.HFApi;
 using WpfApp.Views;
 
 namespace UareU.Views
@@ -27,8 +29,12 @@ namespace UareU.Views
     public partial class MainWindow : Window
     {
         VideoStream _videoStream = new VideoStream();
+
+        public CameraApi api { get; set; }
+
         public MainWindow()
         {
+            api = new CameraApi();
             InitializeComponent();
             string imagesFolder = System.IO.Path.Combine(
                 AppDomain.CurrentDomain.BaseDirectory,
@@ -39,11 +45,13 @@ namespace UareU.Views
             MainFrame.Navigate(new MainPage());
             this.Loaded += MainWindow_Loaded;
             this.Closing += MainWindow_Closing;
+
         }
 
-        private void MainWindow_Loaded(object sender, RoutedEventArgs e)
+
+        private async void MainWindow_Loaded(object sender, RoutedEventArgs e)
         {
-            //FetureOneService._videoStream = _videoStream;
+           await api.OpenCameraContext();
             //_videoStream.StartStreamingVideo(liveStreamImage);
             // Get monitor where the app opens
             var screen = Screen.FromHandle(
@@ -62,56 +70,61 @@ namespace UareU.Views
 
         private void NavigateTo(Page newPage)
         {
-            if(MainFrame.Content is AutoCapturePage autoCapturePage )
+            if (MainFrame.Content is AutoCapturePage autoCapturePage ||
+                MainFrame.Content is MatchingPage matcPage ||
+                MainFrame.Content is VerificationPage verify ||
+                MainFrame.Content is DatabasePage database ||
+                MainFrame.Content is EnrollPage enroll ||
+                MainFrame.Content is IdentificationPage iden
+                )
             {
-                _videoStream.StopStreamingVideo();
+                api.StopOperation();
+                //_videoStream.StopStreamingVideo();
             }
 
             MainFrame.Navigate(newPage);
         }
 
 
-        private void MainWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e) 
+        private async void MainWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e) 
         {
             
             _videoStream.StopStreamingVideo();
+            await api.CloseCameraContext();
             
         }
 
         private void AutoCapture(object sender, RoutedEventArgs e)
         {
-            NavigateTo(new AutoCapturePage(_videoStream));
+            NavigateTo(new AutoCapturePage(_videoStream,api));
         }
 
         private void Matching(object sender, RoutedEventArgs e)
         {
-            NavigateTo(new MatchingPage());
+            NavigateTo(new MatchingPage(api));
         }
 
-        private void CameraMatching(object sender, RoutedEventArgs e)
+        private void Verification(object sender, RoutedEventArgs e)
         {
-            NavigateTo(new MatchingPage());
+            NavigateTo(new VerificationPage(_videoStream,api));
         }
 
         private void Database(object sender, RoutedEventArgs e)
         {
-            NavigateTo(new DatabasePage());
+            NavigateTo(new DatabasePage(api));
         }
 
         private void Enrollment(object sender, RoutedEventArgs e)
         {
-
+            NavigateTo(new EnrollPage(_videoStream,api));
         }
 
         private void Authentication(object sender, RoutedEventArgs e)
         {
-
+            NavigateTo(new IdentificationPage(_videoStream,api));
         }
 
-        private void Settings(object sender, RoutedEventArgs e)
-        {
 
-        }
 
 
     }

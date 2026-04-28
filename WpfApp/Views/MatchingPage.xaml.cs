@@ -16,7 +16,8 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using UareU;
-using WpfApp.Features;
+using WpfApp.HFApi;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.ListView;
 
 namespace UareU.Views
 {
@@ -27,13 +28,27 @@ namespace UareU.Views
     {
         private BitmapImage img1;
         private BitmapImage img2;
-        Matching match;
-        public MatchingPage()
+        private CameraApi api;
+        public MatchingPage(CameraApi api)
         {
             InitializeComponent();
-            match = new Matching();
+            this.api = api;
+            
+
         }
-      
+
+        // 🔥 Runs AFTER Frame.Navigate()
+        private void Page_Loaded(object sender, RoutedEventArgs e)
+        {
+            api.StopOperationFlag = false;
+        }
+
+        // 🔴 Runs when navigating away
+        private void Page_Unloaded(object sender, RoutedEventArgs e)
+        {
+            api.StopOperation();
+        }
+
 
 
         private void UploadImg1(object sender, RoutedEventArgs e)
@@ -110,13 +125,12 @@ namespace UareU.Views
             if(img1 != null && img2 != null)
             {
                 Loader.Show();
-                var result = await match.MatchingImage(img1, img2);
+                var result = await api.MatchTwoImage(img1, img2);
                 Loader.Hide();
                 App.Current.Dispatcher.Invoke(() =>
                 {
                     //ScoreText.Text = $"{Math.Round(result,2) * 100}%";
-                    ScoreText.Text = $"{Math.Round(result * 100, 2)}";
-                    Console.WriteLine(Math.Round(result * 100,2));
+                    ScoreText.Text = $"{result * 100}%";
                 });
             }
             else

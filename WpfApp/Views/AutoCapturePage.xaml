@@ -6,19 +6,130 @@
       xmlns:local="clr-namespace:UareU.Views"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
-      Title="AutoCapturePage">
-   
+      Title="AutoCapturePage"
+       Loaded="Page_Loaded"
+      Unloaded="Page_Unloaded"
+      >
+
 
 
     <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <!-- NEW SETTINGS PANEL -->
+            <RowDefinition Height="*"/>
+            <!-- MAIN CONTENT -->
+        </Grid.RowDefinitions>
+
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
-        <!-- ========== RIGHT CONTENT AREA ========== -->
-        
-        <Grid Grid.Column="0" Margin="40">
-   
+
+        <!-- ===================================================== -->
+        <!-- 🔵 TOP SETTINGS PANEL (NEW) -->
+        <!-- ===================================================== -->
+        <Border Grid.Row="0" Grid.ColumnSpan="2"
+        Margin="30,20,30,10"
+        Background="White"
+        CornerRadius="24"
+        Padding="25"
+        BorderBrush="#E8E8E8"
+        BorderThickness="1">
+
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="20"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <!-- HEADER -->
+                <StackPanel Orientation="Vertical">
+                    <TextBlock Text="Detection Settings"
+                       FontSize="24"
+                       FontWeight="Bold"
+                       Foreground="#222"/>
+
+                    <TextBlock Text="Adjust thresholds before starting auto capture"
+                       FontSize="14"
+                       Foreground="#777"
+                       Margin="0,4,0,0"/>
+                </StackPanel>
+
+                <!-- SETTINGS CARDS -->
+                <Grid Grid.Row="2">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="20"/>
+
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+
+                    <!-- ================= MIN QUALITY CARD ================= -->
+                    <Border Grid.Column="0"
+                    Background="#F9FAFB"
+                    CornerRadius="18"
+                    Padding="20"
+                    BorderBrush="#E5E7EB"
+                    BorderThickness="1">
+
+                        <StackPanel>
+                            <TextBlock Text="🟢 Face Quality"
+                               FontWeight="Bold"
+                               FontSize="16"
+                               Foreground="#333"/>
+
+                            <TextBlock Text="Minimum sharpness"
+                               FontSize="12"
+                               Foreground="#888"
+                               Margin="0,3,0,15"/>
+
+                            <Slider Minimum="0" Maximum="100"
+                            Value="50"
+                            TickFrequency="10"
+                            IsSnapToTickEnabled="True"
+                            x:Name="MinQualitySlider"/>
+
+                            <TextBox Height="32"
+                             Margin="0,10,0,0"
+                             HorizontalContentAlignment="Center"
+                             FontWeight="SemiBold"
+                             Text="{Binding ElementName=MinQualitySlider, Path=Value}"/>
+                        </StackPanel>
+                    </Border>
+
+                    <!-- ================= MIN SPOOF CARD ================= -->
+ 
+
+                    <!-- APPLY BUTTON -->
+                    <StackPanel Grid.Column="4"
+                        VerticalAlignment="Center">
+
+                        <Button Content="Apply"
+                        Width="150"
+                        Height="48"
+                        FontSize="15"
+                        Style="{DynamicResource FancyButton}"
+                        Click="Apply_Setting"
+                                />
+
+                        <TextBlock Text="Changes apply instantly"
+                           FontSize="11"
+                           Foreground="#888"
+                           HorizontalAlignment="Center"
+                           Margin="0,6,0,0"/>
+                    </StackPanel>
+
+                </Grid>
+            </Grid>
+        </Border>
+
+        <!-- ===================================================== -->
+        <!-- LEFT CONTENT -->
+        <!-- ===================================================== -->
+        <Grid Grid.Row="1" Grid.Column="0" Margin="40">
+
             <Grid.RowDefinitions>
                 <RowDefinition Height="auto"/>
                 <RowDefinition Height="auto"/>
@@ -28,73 +139,78 @@
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
 
-
-
-            <!-- Header -->
-            <TextBlock Text="Process Detail"
-     Grid.Row="0"
-                FontSize="32"
-FontWeight="Bold"
-Foreground="#333"/>
-
-            <!-- Subtitle -->
-            <TextBlock Grid.Row="1"
-Text="Process detail"
-FontSize="16"
-Foreground="#666"/>
-
-            <!-- Placeholder content panel -->
+            <!-- Detail card -->
             <Border Grid.Row="2"
- Background="White"
- CornerRadius="20"
- Margin="0,20,0,0"
- Padding="25"
- BorderBrush="#E0E0E0"
- BorderThickness="1">
+                Background="White"
+                CornerRadius="20"
+                Margin="0,20,0,0"
+                Padding="25"
+                BorderBrush="#E0E0E0"
+                BorderThickness="1">
 
-                <StackPanel VerticalAlignment="Center">
-
-                    <!-- Description -->
-                    <TextBlock Text="Detail"
-            x:Name="detail"
-            FontSize="20"
-             FontWeight="Bold"
-            Foreground="#666"
-            TextAlignment="Center"
-            Margin="0,15"/>
-
-
-                    <Button Content="Save Image"
-DockPanel.Dock="Right"
-Style="{DynamicResource  FancyButton}"
-Width="140"
-Height="45"
-Margin="10,0,0,0"
-Click="Select_Path"/>
-
-                </StackPanel>
-
+                <TextBlock Text="Detail"
+                       x:Name="detail"
+                       FontSize="20"
+                       FontWeight="Bold"
+                       Foreground="#666"
+                       TextAlignment="Center"/>
             </Border>
+
+            <TextBlock Grid.Row="3"
+                   VerticalAlignment="Center"
+                   Text="Capture Image"
+                   FontSize="16"
+                   Foreground="#666"/>
+
+            <!-- Captured image card -->
             <Border Grid.Row="4"
-Background="White"
-CornerRadius="12"
-Padding="10"
-Margin="0,10"
-BorderBrush="#E0E0E0"
-BorderThickness="1">
+                Background="White"
+                CornerRadius="12"
+                Padding="10"
+                Margin="0,10"
+                BorderBrush="#E0E0E0"
+                BorderThickness="1">
 
-                <Image x:Name="captureImage"
-         Stretch="Fill"/>
+                <StackPanel HorizontalAlignment="Center">
+                    <Border BorderBrush="#DDD" BorderThickness="1" CornerRadius="12"
+                        MinWidth="200" MinHeight="200" MaxHeight="500" MaxWidth="500">
 
+                        <Image x:Name="captureImage" Stretch="Fill"/>
+                    </Border>
+
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                        <Button Content="Save Image"
+                            Style="{DynamicResource FancyButton}"
+                            Width="140" Height="45"
+                            Margin="10"
+                            Click="Select_Path"/>
+
+                        <Button Content="Recapture"
+                            Style="{DynamicResource FancyButton}"
+                            Width="140" Height="45"
+                            Margin="10"
+                            Click="Restart_Click"/>
+
+                        <Button Content="Stop"
+    Style="{DynamicResource FancyButton}"
+    Width="140" Height="45"
+    Margin="10"
+    Click="Stop_Click"/>
+                    </StackPanel>
+                </StackPanel>
             </Border>
-            <!-- Path box -->
         </Grid>
-        <Border Grid.Column="1"
- Background="White"
- CornerRadius="20"
- Padding="20"
- BorderBrush="#E6E6E6"
- BorderThickness="1">
+
+        <!-- ===================================================== -->
+        <!-- RIGHT CAMERA -->
+        <!-- ===================================================== -->
+        <Border Grid.Row="1" Grid.Column="1"
+            Margin="30"
+            Background="White"
+            CornerRadius="20"
+            Padding="20"
+            BorderBrush="#E6E6E6"
+            BorderThickness="1">
 
             <Grid>
                 <Grid.RowDefinitions>
@@ -102,54 +218,52 @@ BorderThickness="1">
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
 
-                <!-- Header -->
-                <DockPanel Margin="0,0,0,15">
-                    <TextBlock Text="📷 Live Camera"
-                FontSize="20"
-                FontWeight="SemiBold"
-                Foreground="#333"/>
-                </DockPanel>
+                <TextBlock Text="📷 Live Camera"
+                       FontSize="20"
+                       FontWeight="SemiBold"
+                       Foreground="#333"/>
 
-                <!-- Camera Container -->
                 <Border Grid.Row="1"
-         CornerRadius="15"
-         Background="#111"
-         ClipToBounds="True">
+                    CornerRadius="15"
+                    Background="#111"
+                    ClipToBounds="True">
 
                     <Grid>
+                        <Image x:Name="liveStreamImage" Stretch="Uniform"/>
 
-                        <!-- Camera Image -->
-                        <Image x:Name="liveStreamImage"
-                                Stretch="Uniform"
-                               />
-                        <!--  Stretch="Fill" -->
-                <!--RenderTransformOrigin="0.5,0.5" -->
-                               
-
-                        <!-- Overlay canvas for face boxes -->
                         <Canvas x:Name="canvasOverlay"
-                 IsHitTestVisible="False"
-                                Width="{Binding ElementName=liveStreamImage, Path=ActualWidth}"
-        Height="{Binding ElementName=liveStreamImage, Path=ActualHeight}"
-                                />
+                            IsHitTestVisible="False"
+                            Width="{Binding ElementName=liveStreamImage, Path=ActualWidth}"
+                            Height="{Binding ElementName=liveStreamImage, Path=ActualHeight}"/>
 
-                        <!-- Glass overlay label -->
                         <Border HorizontalAlignment="Left"
-                 VerticalAlignment="Top"
-                 Margin="15"
-                 Padding="8,4"
-                 CornerRadius="8"
-                 Background="#66000000">
-
+                            VerticalAlignment="Top"
+                            Margin="15"
+                            Padding="8,4"
+                            CornerRadius="8"
+                            Background="#66000000">
                             <TextBlock Text="LIVE"
-                        Foreground="White"
-                        FontWeight="Bold"
-                        FontSize="12"/>
+                                   Foreground="White"
+                                   FontWeight="Bold"
+                                   FontSize="12"/>
                         </Border>
 
+                        <!-- FPS OVERLAY -->
+                        <Border HorizontalAlignment="Right"
+        VerticalAlignment="Top"
+        Margin="15"
+        Padding="8,4"
+        CornerRadius="8"
+        Background="#66000000">
+
+                            <TextBlock x:Name="FpsText"
+               Text="0 FPS"
+               Foreground="#00FF90"
+               FontWeight="Bold"
+               FontSize="14"/>
+                        </Border>
                     </Grid>
                 </Border>
-
             </Grid>
         </Border>
 

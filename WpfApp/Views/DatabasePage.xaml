@@ -3,10 +3,14 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-      xmlns:local="clr-namespace:WpfApp.Views"
+      xmlns:local="clr-namespace:UareU.Views"
+xmlns:controls="clr-namespace:UareU.Views"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
-      Title="DatabasePage">
+      Title="DatabasePage"
+       Loaded="Page_Loaded"
+Unloaded="Page_Unloaded"
+      >
 
     <Grid Margin="35">
 
@@ -36,97 +40,183 @@
                 BorderThickness="1">
 
             <DataGrid x:Name="FaceGrid"
-                      AutoGenerateColumns="False"
-                      CanUserAddRows="False"
-                      RowHeight="75"
-                      HeadersVisibility="Column"
-                      GridLinesVisibility="None"
-                      BorderThickness="0"
-                      Background="Transparent">
+          AutoGenerateColumns="False"
+          CanUserAddRows="False"
+          HeadersVisibility="Column"
+          GridLinesVisibility="None"
+          BorderThickness="0"
+          Background="Transparent"
+          RowHeight="190"
+          VerticalAlignment="Stretch"
+          SelectionChanged="FaceGrid_SelectionChanged"
+                      >
 
-                <!-- Modern header style -->
                 <DataGrid.Resources>
+
+                    <!-- COLUMN HEADER -->
                     <Style TargetType="DataGridColumnHeader">
-                        <Setter Property="FontSize" Value="16"/>
+                        <Setter Property="FontSize" Value="18"/>
                         <Setter Property="FontWeight" Value="SemiBold"/>
-                        <Setter Property="Foreground" Value="#666"/>
+                        <Setter Property="Foreground" Value="#444"/>
+                        <Setter Property="Padding" Value="15"/>
                         <Setter Property="BorderThickness" Value="0"/>
-                        <Setter Property="Padding" Value="10"/>
                         <Setter Property="Background" Value="Transparent"/>
                     </Style>
 
-                    <!-- Remove ugly row selection color -->
+                    <!-- MODERN ROW STYLE -->
                     <Style TargetType="DataGridRow">
+                        <Setter Property="Margin" Value="0,8"/>
                         <Setter Property="Background" Value="Transparent"/>
-                        <Setter Property="BorderThickness" Value="0"/>
-                        <Setter Property="Margin" Value="0,6"/>
                         <Setter Property="Template">
                             <Setter.Value>
                                 <ControlTemplate TargetType="DataGridRow">
-                                    <Border CornerRadius="15"
-                                            Background="White"
-                                            BorderBrush="#EEEEEE"
-                                            BorderThickness="1"
-                                            Padding="5">
+                                    <Border x:Name="RowBorder"
+                                CornerRadius="18"
+                                Background="White"
+                                BorderBrush="#EAEAEA"
+                                BorderThickness="1"
+                                Padding="10"
+                                SnapsToDevicePixels="True">
+
                                         <DataGridCellsPresenter/>
+
+                                    </Border>
+
+                                    <ControlTemplate.Triggers>
+
+                                        <!-- Hover -->
+                                        <Trigger Property="IsMouseOver" Value="True">
+                                            <Setter TargetName="RowBorder"
+                                        Property="BorderBrush"
+                                        Value="#C5CAE9"/>
+                                            <Setter TargetName="RowBorder"
+                                        Property="Background"
+                                        Value="#FAFBFF"/>
+                                        </Trigger>
+
+                                        <!-- Selected -->
+                                        <Trigger Property="IsSelected" Value="True">
+                                            <Setter TargetName="RowBorder"
+                                        Property="BorderBrush"
+                                        Value="#7986CB"/>
+                                            <Setter TargetName="RowBorder"
+                                        Property="Background"
+                                        Value="#F1F3FF"/>
+                                        </Trigger>
+
+                                    </ControlTemplate.Triggers>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+
+                    <!-- MODERN BUTTON -->
+                    <Style TargetType="Button">
+                        <Setter Property="FontWeight" Value="SemiBold"/>
+                        <Setter Property="Foreground" Value="White"/>
+                        <Setter Property="BorderThickness" Value="0"/>
+                        <Setter Property="Padding" Value="14,6"/>
+                        <Setter Property="Cursor" Value="Hand"/>
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="Button">
+                                    <Border CornerRadius="20"
+                                Background="{TemplateBinding Background}">
+                                        <ContentPresenter HorizontalAlignment="Center"
+                                              VerticalAlignment="Center"/>
                                     </Border>
                                 </ControlTemplate>
                             </Setter.Value>
                         </Setter>
                     </Style>
+
                 </DataGrid.Resources>
 
                 <DataGrid.Columns>
 
-                    <!-- ID -->
-                    <DataGridTextColumn Header="ID"
-                                        Width="120"
-                                        Binding="{Binding RecordId}"/>
 
-                    <!-- FACE -->
-                    <DataGridTemplateColumn Header="Face" Width="200">
+                    <!-- BIG FACE IMAGE -->
+                    <DataGridTemplateColumn Header="Face Preview" Width="3.5*">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <Border CornerRadius="12"
-                                        Width="60"
-                                        Height="60"
-                                        ClipToBounds="True"
-                                        BorderBrush="#EEE"
-                                        BorderThickness="1">
-                                    <Image Source="{Binding FaceImage}"
-                                           Stretch="Fill"/>
+
+                                <Border CornerRadius="20"
+                    Background="#FAFAFA"
+                    BorderBrush="#EAEAEA"
+                    BorderThickness="1"
+                    Margin="8"
+                    Padding="12">
+
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="220"/>
+                                            <ColumnDefinition Width="*"/>
+                                        </Grid.ColumnDefinitions>
+
+                                        <!-- BIG FACE IMAGE -->
+                                        <Border CornerRadius="16"
+                            Height="160"
+                            Width="200"
+                            ClipToBounds="True"
+                            Background="#DDD">
+                                            <Border CornerRadius="16"
+        Height="160"
+        Width="200"
+        Background="#F4F6FB"
+        BorderBrush="#E3E6F0"
+        BorderThickness="1"
+        ClipToBounds="True">
+
+                                                <Image Source="{Binding FaceImage}"
+           Stretch="Uniform"
+           HorizontalAlignment="Center"
+           VerticalAlignment="Center"/>
+                                            </Border>
+                                        </Border>
+
+                                        <!-- TEXT INFO -->
+                                        <StackPanel Grid.Column="1"
+                                VerticalAlignment="Center"
+                                Margin="25,0,0,0">
+
+                                            <TextBlock Text="Registered Face"
+                                   FontSize="20"
+                                   FontWeight="SemiBold"
+                                   Foreground="#222"/>
+
+                                            <TextBlock Text="{Binding RecordId}"
+                                   FontSize="15"
+                                   Foreground="#777"
+                                   Margin="0,8,0,0"
+                                   TextWrapping="Wrap"/>
+
+                                        </StackPanel>
+                                    </Grid>
+
                                 </Border>
+
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
 
-                    <!-- ACTION -->
-                    <DataGridTemplateColumn Header="Action" Width="250">
+                    <!-- ACTION BUTTONS -->
+                    <DataGridTemplateColumn Header="Actions" Width="1.8*">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
+                                <StackPanel Orientation="Horizontal"
+                                HorizontalAlignment="Center">
 
-                                <StackPanel Orientation="Horizontal">
 
-                                    <!-- EDIT -->
-                                    <Button Content="Edit"
-                                            Width="90"
-                                            Height="38"
-                                            Margin="5"
-                                            Background="#5C6BC0"
-                                            Foreground="White"
-                                            Click="Edit_Click"/>
-
-                                    <!-- DELETE -->
                                     <Button Content="Delete"
-                                            Width="90"
-                                            Height="38"
-                                            Margin="5"
-                                            Background="#EF5350"
-                                            Foreground="White"
-                                            Click="Delete_Click"/>
+                                Width="95"
+                                Height="38"
+                                Margin="8"
+                                Background="#EF5350"
+                                Click="Delete_Click"
+                                            CommandParameter="{Binding}"
+                                            />
 
                                 </StackPanel>
-
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
@@ -134,6 +224,11 @@
                 </DataGrid.Columns>
             </DataGrid>
         </Border>
-
+        <controls:LoaderView
+             x:Name="Loader"
+              Grid.RowSpan="3"
+              Panel.ZIndex="9999"
+              HorizontalAlignment="Stretch"
+              VerticalAlignment="Stretch"/>
     </Grid>
 </Page>

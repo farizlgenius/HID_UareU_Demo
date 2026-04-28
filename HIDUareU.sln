@@ -1,9 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 18
-VisualStudioVersion = 18.3.11520.95 d18.3
+VisualStudioVersion = 18.3.11520.95
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UareU", "WpfApp\UareU.csproj", "{3194556E-F594-4594-AAAB-18C268431051}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MaskDetection.Core", "MaskDetection.Core\MaskDetection.Core.csproj", "{86E3B861-33AA-484C-B26C-45EA6B453F49}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UareU.GUI", "UareU.GUI\UareU.GUI.csproj", "{D1511FE9-4192-4434-974D-9FAF9C4619F3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +25,22 @@ Global
 		{3194556E-F594-4594-AAAB-18C268431051}.Release|Any CPU.Build.0 = Release|Any CPU
 		{3194556E-F594-4594-AAAB-18C268431051}.Release|x64.ActiveCfg = Release|x64
 		{3194556E-F594-4594-AAAB-18C268431051}.Release|x64.Build.0 = Release|x64
+		{86E3B861-33AA-484C-B26C-45EA6B453F49}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{86E3B861-33AA-484C-B26C-45EA6B453F49}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{86E3B861-33AA-484C-B26C-45EA6B453F49}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{86E3B861-33AA-484C-B26C-45EA6B453F49}.Debug|x64.Build.0 = Debug|Any CPU
+		{86E3B861-33AA-484C-B26C-45EA6B453F49}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{86E3B861-33AA-484C-B26C-45EA6B453F49}.Release|Any CPU.Build.0 = Release|Any CPU
+		{86E3B861-33AA-484C-B26C-45EA6B453F49}.Release|x64.ActiveCfg = Release|Any CPU
+		{86E3B861-33AA-484C-B26C-45EA6B453F49}.Release|x64.Build.0 = Release|Any CPU
+		{D1511FE9-4192-4434-974D-9FAF9C4619F3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D1511FE9-4192-4434-974D-9FAF9C4619F3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D1511FE9-4192-4434-974D-9FAF9C4619F3}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{D1511FE9-4192-4434-974D-9FAF9C4619F3}.Debug|x64.Build.0 = Debug|Any CPU
+		{D1511FE9-4192-4434-974D-9FAF9C4619F3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D1511FE9-4192-4434-974D-9FAF9C4619F3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D1511FE9-4192-4434-974D-9FAF9C4619F3}.Release|x64.ActiveCfg = Release|Any CPU
+		{D1511FE9-4192-4434-974D-9FAF9C4619F3}.Release|x64.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

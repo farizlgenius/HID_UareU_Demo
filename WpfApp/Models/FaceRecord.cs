@@ -5,9 +5,9 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Media.Imaging;
 
-namespace WpfApp.Features
+namespace WpfApp.Models
 {
-    public class FaceRecord
+    public sealed class FaceRecord
     {
         public string RecordId { get; set; }
         public BitmapImage FaceImage { get; set; }

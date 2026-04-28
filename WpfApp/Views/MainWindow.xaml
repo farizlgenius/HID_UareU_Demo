@@ -37,17 +37,17 @@
                     Margin="0,10"
                     Click="Matching"/>
 
-                <Button Content="🙂 Camera Match"
+                <Button Content="🙂 Verification"
                     Style="{DynamicResource  FancyButton}"
                     Margin="0,10"
-                    Click="CameraMatching"/>
+                    Click="Verification"/>
 
                 <Button Content="💾 Enrollment"
                     Style="{DynamicResource  FancyButton}"
                     Margin="0,10"
                     Click="Enrollment"/>
 
-                <Button Content="🔎 Authentication"
+                <Button Content="🔎 Identification"
                     Style="{DynamicResource  FancyButton}"
                     Margin="0,10"
                     Click="Authentication"/>
@@ -58,12 +58,7 @@
                      Margin="0,10"
                      Click="Database"/>
 
-                <Separator Margin="10,25"/>
 
-                <Button Content="⚙ Settings"
-                    Style="{DynamicResource  FancyButton}"
-                    Margin="0,10"
-                    Click="Settings"/>
             </StackPanel>
         </Border>
         <Frame x:Name="MainFrame"

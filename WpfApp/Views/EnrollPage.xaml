@@ -1,0 +1,273 @@
+﻿<Page x:Class="WpfApp.Views.EnrollPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      mc:Ignorable="d"
+       Loaded="Page_Loaded"
+Unloaded="Page_Unloaded"
+      >
+
+    <Grid Background="#F5F7FB">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <!-- ===================================================== -->
+        <!-- LEFT SIDE : MODERN FORM -->
+        <!-- ===================================================== -->
+        <Grid Grid.Column="0" Margin="40">
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+                <!-- NEW STATUS -->
+                <RowDefinition Height="Auto"/>
+                <!-- BUTTONS -->
+            </Grid.RowDefinitions>
+
+            <!-- ========================================= -->
+            <!-- TITLE -->
+            <!-- ========================================= -->
+            <StackPanel Margin="0,0,0,10">
+                <TextBlock Text="Face Enrollment"
+                   FontSize="36"
+                   FontWeight="Bold"
+                   Foreground="#222"/>
+
+                <TextBlock x:Name="Detail"
+                   Text="Camera is scanning for face..."
+                   FontSize="16"
+                   Foreground="#777"/>
+            </StackPanel>
+
+            <!-- ========================================= -->
+            <!-- STATUS SUCCESS BAR -->
+            <!-- ========================================= -->
+            <Border Grid.Row="1"
+            x:Name="CaptureSuccessPanel"
+            Visibility="Collapsed"
+            Background="#E8F5E9"
+            Padding="15"
+            CornerRadius="15"
+            Margin="0,10,0,20">
+
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="✔"
+                       FontSize="24"
+                       Foreground="#2E7D32"
+                       Margin="0,0,10,0"/>
+
+                    <StackPanel>
+                        <TextBlock Text="Face captured successfully!"
+                           FontWeight="Bold"
+                           Foreground="#2E7D32"/>
+                        <TextBlock Text="You can now save the profile."
+                           Foreground="#2E7D32"/>
+                    </StackPanel>
+                </StackPanel>
+            </Border>
+
+            <!-- ========================================= -->
+            <!-- BIG CAPTURED FACE PREVIEW -->
+            <!-- ========================================= -->
+            <Border Grid.Row="2"
+            CornerRadius="30"
+            BorderBrush="#E5E5E5"
+            BorderThickness="1"
+            Padding="20">
+
+                <Border.Background>
+                    <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                        <GradientStop Color="#FFFFFF" Offset="0"/>
+                        <GradientStop Color="#F4F8FF" Offset="1"/>
+                    </LinearGradientBrush>
+                </Border.Background>
+
+                <Border.Effect>
+                    <DropShadowEffect BlurRadius="30"
+                              ShadowDepth="0"
+                              Opacity="0.15"/>
+                </Border.Effect>
+
+                <!-- HUGE IMAGE AREA -->
+                <Viewbox Stretch="Uniform">
+                    <Border CornerRadius="20"
+                    Background="#EEF2F7"
+                    Padding="10">
+
+                        <Image x:Name="captureImage"
+                       Stretch="Uniform"
+                       RenderOptions.BitmapScalingMode="HighQuality"/>
+                    </Border>
+                </Viewbox>
+            </Border>
+
+            <!-- ========================================= -->
+            <!-- MODERN STATUS PANEL -->
+            <!-- ========================================= -->
+            <Border Grid.Row="3"
+        x:Name="StatusPanel"
+        Margin="0,25,0,0"
+        Padding="18"
+        CornerRadius="18"
+        Background="#EEF4FF"
+        BorderBrush="#D6E4FF"
+        BorderThickness="1">
+
+                <Border.Effect>
+                    <DropShadowEffect BlurRadius="20"
+                          ShadowDepth="0"
+                          Opacity="0.15"/>
+                </Border.Effect>
+
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="60"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <!-- STATUS ICON -->
+                    <Border x:Name="StatusIconBg"
+                Width="44"
+                Height="44"
+                CornerRadius="12"
+                Background="#4A90E2"
+                VerticalAlignment="Center"
+                HorizontalAlignment="Center">
+
+                        <TextBlock x:Name="StatusIcon"
+                       Text="📷"
+                       FontSize="22"
+                       VerticalAlignment="Center"
+                       HorizontalAlignment="Center"/>
+                    </Border>
+
+                    <!-- STATUS TEXT -->
+                    <StackPanel Grid.Column="1" Margin="15,0,0,0">
+                        <TextBlock x:Name="StatusTitle"
+                       Text="Camera Started"
+                       FontSize="17"
+                       FontWeight="Bold"
+                       Foreground="#1A1A1A"/>
+
+                        <TextBlock x:Name="StatusMessage"
+                       Text="Looking for a face in the frame..."
+                       FontSize="14"
+                       Foreground="#666"
+                       Margin="0,3,0,0"/>
+                    </StackPanel>
+                </Grid>
+            </Border>
+
+            <!-- ========================================= -->
+            <!-- ACTION BUTTONS -->
+            <!-- ========================================= -->
+            <StackPanel Grid.Row="4"
+                Orientation="Horizontal"
+                HorizontalAlignment="Center"
+                Margin="0,25,0,0">
+
+                <Button x:Name="BtnRetake"
+                Content="🔄 Retake"
+                Width="160"
+                Height="50"
+                Margin="10"
+                FontSize="16"
+                FontWeight="Bold"
+                Background="#FF9800"
+                Foreground="White"
+                BorderThickness="0"
+                        Click="Click_Recap"
+                        />
+
+                <Button x:Name="BtnSave"
+                Content="💾 Save Profile"
+                Width="200"
+                Height="50"
+                Margin="10"
+                FontSize="16"
+                FontWeight="Bold"
+                Background="#1E88E5"
+                Foreground="White"
+                BorderThickness="0"
+                    IsEnabled="False"
+                        Click="Click_Save"
+                        />
+            </StackPanel>
+
+        </Grid>
+
+        <!-- ===================================================== -->
+        <!-- RIGHT SIDE : CAMERA -->
+        <!-- ===================================================== -->
+        <Border Grid.Column="1"
+                Background="White"
+                CornerRadius="20"
+                Padding="20"
+                Margin="30"
+                BorderBrush="#E6E6E6"
+                BorderThickness="1">
+
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+
+                <TextBlock Text="📷 Live Camera"
+                           FontSize="20"
+                           FontWeight="SemiBold"
+                           Margin="0,0,0,15"/>
+
+                <Border Grid.Row="1"
+                        CornerRadius="15"
+                        Background="#111"
+                        ClipToBounds="True">
+
+                    <Grid>
+                        <Image x:Name="liveStreamImage" Stretch="Uniform"/>
+
+                        <Canvas x:Name="canvasOverlay"
+                                IsHitTestVisible="False"
+                                Width="{Binding ElementName=liveStreamImage, Path=ActualWidth}"
+                                Height="{Binding ElementName=liveStreamImage, Path=ActualHeight}"/>
+
+                        <Border HorizontalAlignment="Left"
+                                VerticalAlignment="Top"
+                                Margin="15"
+                                Padding="8,4"
+                                CornerRadius="8"
+                                Background="#66000000">
+                            <TextBlock Text="LIVE"
+                                       Foreground="White"
+                                       FontWeight="Bold"/>
+                        </Border>
+
+                        <!-- FPS OVERLAY -->
+                        <Border HorizontalAlignment="Right"
+VerticalAlignment="Top"
+Margin="15"
+Padding="8,4"
+CornerRadius="8"
+Background="#66000000">
+
+                            <TextBlock x:Name="FpsText"
+       Text="0 FPS"
+       Foreground="#00FF90"
+       FontWeight="Bold"
+       FontSize="14"/>
+                        </Border>
+
+                    </Grid>
+                    
+                </Border>
+
+            </Grid>
+        </Border>
+
+    </Grid>
+</Page>
